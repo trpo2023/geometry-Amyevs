@@ -20,6 +20,7 @@ APP_OBJECTS = $(APP_SOURCES:$(SRC_DIR)/%.$(SRC_EXT)=$(OBJ_DIR)/$(SRC_DIR)/%.o)
 LIB_SOURCES = $(shell find $(SRC_DIR)/$(LIB_NAME) -name '*.$(SRC_EXT)')
 LIB_OBJECTS = $(LIB_SOURCES:$(SRC_DIR)/%.$(SRC_EXT)=$(OBJ_DIR)/$(SRC_DIR)/%.o)
 
+#test
 TEST_DIR := test
 TEST_PATH = $(OBJ_DIR)/$(TEST_DIR)
 TEST_OBJ = $(OBJ_DIR)/geometry-test/parser_test.o $(OBJ_DIR)/geometry-test/main.o 
@@ -34,14 +35,6 @@ all: $(LIB_PATH) test $(APP_PATH)
 $(APP_PATH): $(APP_OBJECTS) $(LIB_PATH)
 	$(CC) $(CFLAGS) $(GDB) $(CPPFLAGS) $^ -o $@ -lm
 
-$(LIB_PATH): $(LIB_OBJECTS)
-	ar rcs $@ $^
-
-$(OBJ_DIR)/%.o: %.c
-	$(CC) -c $(CFLAGS) $(GDB) $(CPPFLAGS) $< -o $@ 
-run:
-	./$(APP_PATH)
-
 $(TEST_PATH) : $(TEST_OBJ) $(LIB_PATH)
 	$(CC) $(CFLAGS) $^ -o  $@
 
@@ -53,6 +46,14 @@ $(OBJ_DIR)/geometry-test/parser_test.o: $(TEST_DIR)/parser_test.c
 
 test: $(LIB_PATH) $(TEST_PATH)
 	./$(TEST_PATH)		
+
+$(LIB_PATH): $(LIB_OBJECTS)
+	ar rcs $@ $^
+
+$(OBJ_DIR)/%.o: %.c
+	$(CC) -c $(CFLAGS) $(GDB) $(CPPFLAGS) $< -o $@ 
+run:
+	./$(APP_PATH)
 
 clean:
 	@rm -f  $(APP_PATH) $(LIB_PATH) $(LIB_OBJECTS) $(APP_OBJECTS) $(DEPS)
