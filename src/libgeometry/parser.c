@@ -60,7 +60,9 @@ void parse_start()
             if (rad < 0) {
                 puts("Radius cannot be negative\n");
             }
-            printf("Perimetr: %.3f, Area: %.3f\n", percircle(rad), areacircle(rad));
+            printf("Perimetr: %.3f, Area: %.3f\n",
+                   percircle(rad),
+                   areacircle(rad));
         } else {
             if (strcmp(string, "q")) {
                 printf("Error at column 0: expected 'circle', 'triangle' or "
